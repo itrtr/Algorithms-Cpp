@@ -3,6 +3,7 @@
 #include <vector>
 #include <queue>
 #include <iostream>
+#include <algorithm>
 #include <unordered_set>
 using namespace std;
 class GraphAlgorithm {
@@ -16,6 +17,10 @@ public:
 
     // LC 127: Word Ladder: https://leetcode.com/problems/word-ladder/
     static int ladderLength(const string& beginWord, const string& endWord, vector<string>& wordList);
+
+    // Codeforces 1037D: Valid Bfs
+    static void validBfs();
+
 };
 
 

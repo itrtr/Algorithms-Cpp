@@ -3,7 +3,7 @@ using namespace std;
 
 int main() {
     GraphAlgorithm g;
-    GraphAlgorithm::messageRoute();
+    GraphAlgorithm::validBfs();
     return 0;
 }
 
