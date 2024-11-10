@@ -1,5 +1,37 @@
 #include "../header/GraphAlgorithm.h"
 
+int GraphAlgorithm::ladderLength(const string& beginWord, const string& endWord, vector<string> &wordList) {
+    unordered_set<string> words(wordList.begin(), wordList.end());
+    if (!words.contains(endWord)) return 0;
+    queue<pair<string,int>> qq;
+    qq.emplace(beginWord, 1);
+    unordered_set<string> visited;
+    visited.emplace(beginWord);
+    int ans = INT_MAX;
+    while (not qq.empty()) {
+        const auto pp = qq.front(); qq.pop();
+        if (pp.first == endWord) {
+            return pp.second; // Also works!
+            //ans = min(ans, pp.second); // we could have returned the first time we find endWord (greedy) but we may have separate path with less hops
+        }
+        string word = pp.first;
+        for(char & j : word) {
+            char cc = j;
+            for(int i=0; i<26; ++i) {
+                if (cc != ('a'+i)) {
+                    j = (char)('a'+i);
+                    if (words.contains(word) and !visited.contains(word)) {
+                        visited.emplace(word);
+                        qq.emplace(word, pp.second+1);
+                    }
+                }
+            }
+            j = cc;
+        }
+    }
+    return ans == INT_MAX ? 0 : ans;
+}
+
 int GraphAlgorithm::snakesAndLadders(vector<vector<int>> &board) {
     const int n = int(board.size());
     queue<pair<int,int>> qq;
