@@ -21,6 +21,8 @@ public:
     // Codeforces 1037D: Valid Bfs
     static void validBfs();
 
+    // LC 841: Keys & Room: https://leetcode.com/problems/keys-and-rooms/
+    static bool canVisitAllRooms(vector<vector<int>>& rooms);
 };
 
 

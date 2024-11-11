@@ -1,5 +1,25 @@
 #include "../header/GraphAlgorithm.h"
 
+// We can also do DFS: https://leetcode.com/problems/keys-and-rooms/submissions/862430596/
+bool GraphAlgorithm::canVisitAllRooms(vector<vector<int>>& rooms) {
+    const int N = (int)rooms.size();
+    vector<bool> visited(N, false);
+    queue<int> qq;
+    qq.push(0);
+    visited[0] = true;
+
+    while(not qq.empty()) {
+        int node = qq.front(); qq.pop();
+        for(int nbr : rooms[node]) {
+            if (not visited[nbr]) {
+                visited[nbr] = true;
+                qq.push(nbr);
+            }
+        }
+    }
+    return !std::any_of(visited.begin(), visited.end(), [](bool val) {return !val;});
+}
+
 void GraphAlgorithm::validBfs() {
     int n;
     cin >> n;
