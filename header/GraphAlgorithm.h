@@ -26,6 +26,9 @@ public:
 
     // LC 695: Largest Island or Max are of Island: https://leetcode.com/problems/max-area-of-island/
     static int maxAreaOfIsland(vector<vector<int>>& grid);
+
+    // HackerRank: Astronaut Pairs: https://www.hackerrank.com/contests/alcoding-summer-challenge/challenges/astronaut-pairs/problem
+    static void astronautPair();
 };
 
 

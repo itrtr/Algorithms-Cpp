@@ -2,6 +2,45 @@
 
 
 
+int findConnectedComponentsSize(int src, vector<bool>& seen, vector<vector<int>>& gh) {
+    seen[src] = true;
+    int sz = 1;
+    for(int conn : gh[src]) {
+        if (!seen[conn]) {
+            sz += findConnectedComponentsSize(conn, seen, gh);
+        }
+    }
+    return sz;
+}
+// Submission: https://www.hackerrank.com/contests/alcoding-summer-challenge/challenges/astronaut-pairs/submissions/code/1385233203
+void GraphAlgorithm::astronautPair() {
+    int n, p;
+    vector<vector<int>> gh(n);
+    cin >> n >> p;
+    int x, y;
+    for(int i=0;i<p;++i) {
+        cin >> x >> y;
+        gh[x].push_back(y);
+        gh[y].push_back(x);
+    }
+
+    vector<bool> seen(n, false);
+    vector<int> conns; // contains elements which repr the size of each connected components
+    for(int node=0; node<n; ++node) {
+        if (!seen[node]) { // means it can represent a connected component of any size
+            conns.push_back(findConnectedComponentsSize(node, seen, gh));
+        }
+    }
+
+    int ans = 0;
+    for(int i=0; i<conns.size(); ++i) {
+        for(int j=i+1; j<conns.size(); ++j) {
+            ans += conns[i] * conns[j];
+        }
+    }
+    printf("%d", ans);
+}
+
 int maxAreaOfIslandHelper(int x, int y, vector<vector<int>>& grid) {
     if (x < 0 || x >= grid.size() || y < 0 || y >= grid[0].size() || grid[x][y] != 1) {
         return 0;
