@@ -5,6 +5,10 @@
 #include <iostream>
 #include <algorithm>
 #include <unordered_set>
+#include <unordered_map>
+#include <set>
+#include <map>
+
 using namespace std;
 class GraphAlgorithm {
 public:
@@ -29,6 +33,9 @@ public:
 
     // HackerRank: Astronaut Pairs: https://www.hackerrank.com/contests/alcoding-summer-challenge/challenges/astronaut-pairs/problem
     static void astronautPair();
+
+    // LC 332: Reconstruct Itinerary: https://leetcode.com/problems/reconstruct-itinerary/
+    static vector<string> findItinerary(vector<vector<string>>& tickets);
 };
 
 

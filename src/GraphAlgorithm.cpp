@@ -1,6 +1,31 @@
 #include "../header/GraphAlgorithm.h"
 
-
+bool findItineraryHelper(const string& src, unordered_map<string, map<string, int>>& gh, vector<string>& ans, const int N) {
+    if (ans.size() == N) return true;
+    for(auto& row : gh[src]) {
+        if (row.second > 0) { // still have a valid ticket
+            row.second -= 1;
+            ans.emplace_back(row.first);
+            if (findItineraryHelper(row.first, gh, ans, N)) return true;
+            row.second += 1;
+            ans.pop_back();
+        }
+    }
+    return false;
+}
+vector<string> GraphAlgorithm::findItinerary(vector<vector<string>>& tickets) {
+    const int N = tickets.size();
+    unordered_map<string, map<string, int>> gh;
+    for(const auto& ticket: tickets) {
+        // directed
+        auto& row = gh[ticket[0]];
+        row[ticket[1]]++; // same to-fro ticket can be multiple
+    }
+    vector<string> ans;
+    ans.emplace_back("JFK");
+    findItineraryHelper("JFK", gh, ans, N+1);
+    return ans;
+}
 
 int findConnectedComponentsSize(int src, vector<bool>& seen, vector<vector<int>>& gh) {
     seen[src] = true;
