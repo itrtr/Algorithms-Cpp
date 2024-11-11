@@ -1,5 +1,34 @@
 #include "../header/GraphAlgorithm.h"
 
+
+
+int maxAreaOfIslandHelper(int x, int y, vector<vector<int>>& grid) {
+    if (x < 0 || x >= grid.size() || y < 0 || y >= grid[0].size() || grid[x][y] != 1) {
+        return 0;
+    }
+    int ans = 1;
+    grid[x][y] = -1; // or 0 whatever just not 1
+    static int dx[] = {0, 0, 1, -1};
+    static int dy[] = {1, -1, 0, 0};
+    for(int i=0; i<4; ++i) {
+        int xx = x + dx[i];
+        int yy = y + dy[i];
+        ans += maxAreaOfIslandHelper(xx, yy, grid);
+    }
+    return ans;
+}
+int GraphAlgorithm::maxAreaOfIsland(vector<vector<int>>& grid) {
+    int ans = 0;
+    for (int i = 0; i < grid.size(); ++i) {
+        for (int j = 0; j < grid[0].size(); ++j) {
+            if (grid[i][j] == 1) {
+                ans = std::max(ans, maxAreaOfIslandHelper(i,j,grid));
+            }
+        }
+    }
+    return ans;
+}
+
 // We can also do DFS: https://leetcode.com/problems/keys-and-rooms/submissions/862430596/
 bool GraphAlgorithm::canVisitAllRooms(vector<vector<int>>& rooms) {
     const int N = (int)rooms.size();

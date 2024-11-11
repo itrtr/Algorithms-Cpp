@@ -23,6 +23,9 @@ public:
 
     // LC 841: Keys & Room: https://leetcode.com/problems/keys-and-rooms/
     static bool canVisitAllRooms(vector<vector<int>>& rooms);
+
+    // LC 695: Largest Island or Max are of Island: https://leetcode.com/problems/max-area-of-island/
+    static int maxAreaOfIsland(vector<vector<int>>& grid);
 };
 
 
