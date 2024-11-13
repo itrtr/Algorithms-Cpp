@@ -1,5 +1,40 @@
 #include "../header/GraphAlgorithm.h"
 
+bool findRedundantConnectionHelper(int node, vector<vector<int>>& graph, unordered_set<int>& visited, int parent) {
+    for(const auto& nbr : graph[node]) {
+        if (nbr == parent) continue;
+        if (visited.contains(nbr)) return true;
+        visited.insert(nbr);
+        if (!findRedundantConnectionHelper(nbr, graph, visited, node)) {
+            visited.erase(nbr);
+        }
+    }
+    return false;
+}
+vector<int> GraphAlgorithm::findRedundantConnection(vector<vector<int>>& edges) {
+    vector<vector<int>> graph(edges.size() + 1); // 1-based indexing
+    for(const auto& edge: edges) {
+        graph[edge[0]].push_back(edge[1]);
+        graph[edge[1]].push_back(edge[0]);
+    }
+    unordered_set<int> visited_ans;
+
+    for(int node=1; node<=edges.size(); ++node) {
+        unordered_set<int> visited;
+        findRedundantConnectionHelper(node, graph, visited, node);
+        if (visited_ans.empty() or visited.size() < visited_ans.size()) {
+            visited_ans = visited;
+        }
+    }
+    for(int i : visited_ans) cout << i << " ";
+    for(int i=edges.size()-1; i>=0; --i) {
+        if (visited_ans.contains(edges[i][0]) and visited_ans.contains(edges[i][1])) {
+            return {edges[i][0], edges[i][1]};
+        }
+    }
+    return {};
+}
+
 bool findItineraryHelper(const string& src, unordered_map<string, map<string, int>>& gh, vector<string>& ans, const int N) {
     if (ans.size() == N) return true;
     for(auto& row : gh[src]) {
@@ -13,6 +48,7 @@ bool findItineraryHelper(const string& src, unordered_map<string, map<string, in
     }
     return false;
 }
+
 vector<string> GraphAlgorithm::findItinerary(vector<vector<string>>& tickets) {
     const int N = tickets.size();
     unordered_map<string, map<string, int>> gh;

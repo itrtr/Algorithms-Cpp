@@ -8,8 +8,21 @@
 #include <unordered_map>
 #include <set>
 #include <map>
+#include <functional>
+#include <utility>
 
 using namespace std;
+
+// Needed for using Pair on Set
+template <typename T1, typename T2>
+struct PairHash {
+    std::size_t operator()(const std::pair<T1, T2>& p) const {
+        std::size_t h1 = std::hash<T1>()(p.first);
+        std::size_t h2 = std::hash<T2>()(p.second);
+        return h1 ^ (h2 << 1);
+    }
+};
+
 class GraphAlgorithm {
 public:
     // Breadth First Search (BFS)
@@ -36,6 +49,9 @@ public:
 
     // LC 332: Reconstruct Itinerary: https://leetcode.com/problems/reconstruct-itinerary/
     static vector<string> findItinerary(vector<vector<string>>& tickets);
+
+    // LC 684. Redundant Connection:  https://leetcode.com/problems/redundant-connection/description/
+    static vector<int> findRedundantConnection(vector<vector<int>>& edges);
 };
 
 
